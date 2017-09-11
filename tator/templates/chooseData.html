@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+
+Click a data Source to begin: 
+
+
+<form action = "{{ url_for('web_funcs.initData') }}" method = "post" class=clear-code>
+        <input type="submit" value="Parachute Data" />
+        <input type="hidden" name="data" value="parachute">
+    </form>
+<form action = "{{ url_for('web_funcs.initData') }}" method = "post" class=clear-code>
+        <input type="submit" value="Interlace Data" />
+        <input type="hidden" name="data" value="interlace">
+    </form>
+<form action = "{{ url_for('web_funcs.initData') }}" method = "post" class=clear-code>
+        <input type="submit" value="Add Your Data" />
+        <input type="hidden" name="data" value="add">
+    </form>
+{% if add %}
+    We would like that to work too! (In progress...)
+{% endif %}
+
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,24 @@
+<!doctype html>
+<title>'Tator</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<!--<script type="text/javascript" src="./javascript.js"></script>-->
+
+<div class=page>
+    <h1>'Tator
+        <img src="/static/assets/Tator_logo.png" alt="Tator Logo" style="width:80px;float:right;">
+    </h1>
+    A starchy annotation tool
+    
+  <div class=metanav>
+  {% if not session.logged_in %}
+    <a href="{{ url_for('web_funcs.login') }}">log in</a>
+  {% else %}
+    <a href="{{ url_for('web_funcs.logout') }}">log out</a>
+  {% endif %}
+  </div>
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+  {% block body %}{% endblock %}
+</div>

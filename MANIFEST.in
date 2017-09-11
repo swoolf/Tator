@@ -1,0 +1,3 @@
+graft tator/templates
+graft tator/static
+include tator/schema.sql

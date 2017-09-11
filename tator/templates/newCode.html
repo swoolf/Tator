@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+
+    <dl id="demo">
+        <dt>Name for your code:
+        <input type=text size=30 id="codeID">
+        <dt>Type a few highly pertinent words for your code:
+        <input type=text size=30 id="Words">
+        <dd><input type=submit value=Code onclick="onCodeButton()">
+      </dl>
+<p id="header" style="display:none"></p>
+<p id="pertain" style="display:none">Is the following word pertinent?</p>
+<p id="theWord"></p>
+<p id="yesNo" style="display:none"><input type=submit value=Yes onclick="onYes()">
+    <input type=submit value=No onclick="onNo()"></p>
+
+<script type="text/javascript">
+    var curWord = '';
+    
+function onCodeButton(){
+    var codeID = document.getElementById("codeID").value;
+    var codeWords = document.getElementById("Words").value;
+    document.getElementById("demo").style.display='none';
+    
+    document.getElementById("header").style.display='block';
+    curWord = runPyScript(codeWords, codeID, "/test");
+    document.getElementById("header").innerHTML = "<strong>"+ codeID +": </strong>" + codeWords;
+    checkWord(curWord);
+}
+
+function checkWord(word){
+    document.getElementById("pertain").style.display='block';
+    document.getElementById("yesNo").style.display='block';
+    document.getElementById("theWord").innerHTML = "<strong>"+ word +"</strong>";
+}
+    
+function onYes(){
+    nextWord = runPyScript("yes", "none" ,"/nextWord");
+    if (nextWord == '3nd'){window.location.replace('/');}
+    else{checkWord(nextWord);}
+}
+
+function onNo(){
+    nextWord = runPyScript("no", "none" ,"/nextWord");
+    if (nextWord == '3nd'){window.location.replace('/');}
+    else{checkWord(nextWord);}
+}
+    
+function runPyScript(input1, input2, dest){
+    var jqXHR = $.ajax({
+        type: "POST",
+        url: dest,
+        async: false,
+        data: {data1: input1,
+              data2: input2}
+    });
+    return jqXHR.responseText;
+}
+</script>
+  {% endif %}
+
+
+{% endblock %}

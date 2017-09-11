@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+
+    <form action="/newCode">
+        <input type="submit" value="Make a new code!" />
+    </form>
+    <form action = "{{ url_for('web_funcs.clearCodes') }}" method = "post" class=clear-code>
+        <input type="submit" style="float: right;" value="Clear Codes" />
+    </form><br>
+    <form style="float: left;" action="/download">
+        <input type="submit" value="Download to csv" />
+    </form>
+    <form style="float: left;" action="/chooseData">
+        <input type="submit" value="Choose Data" />
+    </form>
+    <form style="float: right;" action = "{{url_for('web_funcs.sortByCode')}}" method="post" class=sortByCode>
+        <select name="choice" >
+            <option value="none">None</option>
+            {% for code in codes %}
+                <option value="{{code.code}}">{{code.code}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" style="float: right;" value="Sort By Code" />
+    </form>
+<table style="width:100%;table-layout:fixed" border=1>
+    <col width="5%">
+    <col width="80%">
+<tr>
+    <th>#</th>
+    <th>Text</th>
+    <th>Code</th>
+</tr>
+{% for entry in entries %}
+    <tr>
+    <td>{{entry.IDnum}}</td>
+    <td>{{entry.text|safe}}</td>
+    <td>{{entry.code}}</td>
+    </tr>
+{% endfor %}
+</table>
+    {% else %}
+    Log in to play with some data!  
+    {% endif %}
+{% endblock %}
