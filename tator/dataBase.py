@@ -32,6 +32,7 @@ def addData2DB(db, source=None):
         path = "tator/chelsea stuff/SCR wind testing timeline.xlsx"
         sheetNum=5
         colNum=2
+        return addDataFormatted(db)
     elif source=='interlace':
         path = "tator/interlace/data.xls"
         sheetNum=0
@@ -50,3 +51,30 @@ def addData2DB(db, source=None):
                 db.execute('insert into entries (code, text, IDnum) values (?, ?,?)',
                      [" ", ' '.join(textList[i*textLen:(i+1)*textLen]) , rowidx])
                 db.commit()
+                
+def addDataFormatted(db, source=None):
+    textLen=40
+    if source=='parachute' or source==None :
+        path = "tator/chelsea stuff/all_data_parachute.xlsx"
+        sheetNum=5
+        colNum=0
+    elif source=='interlace':
+        path = "tator/interlace/data.xls"
+        sheetNum=0
+        colNum=2
+    data=[]
+    
+    book = xlrd.open_workbook(path)
+    for sheet in book.sheets():
+        for rowidx in range(0, sheet.nrows):
+            if sheet.cell_type(rowidx,colNum) not in (xlrd.XL_CELL_EMPTY, xlrd.XL_CELL_BLANK):
+                text = sheet.cell(rowidx,colNum).value
+                textList = text.split()
+                for i in range(len(textList)/textLen+1):
+                    data.append( ' '.join(textList[i*textLen:]) )
+
+                    db.execute('insert into entries (code, text, IDnum) values (?, ?,?)',
+                         [" ", ' '.join(textList[i*textLen:(i+1)*textLen]) , rowidx])
+                    db.commit()
+                
+    
