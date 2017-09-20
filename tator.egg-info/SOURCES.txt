@@ -4,6 +4,7 @@ tator/dataBase.py
 tator/schema.sql
 tator/tator.py
 tator/webfuncs.py
+tator.egg-info/.DS_Store
 tator.egg-info/PKG-INFO
 tator.egg-info/SOURCES.txt
 tator.egg-info/dependency_links.txt
@@ -15,6 +16,7 @@ tator/static/assets/.DS_Store
 tator/static/assets/Tator_logo.png
 tator/templates/.DS_Store
 tator/templates/chooseData.html
+tator/templates/editCodes.html
 tator/templates/layout.html
 tator/templates/login.html
 tator/templates/newCode.html

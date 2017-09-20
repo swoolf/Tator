@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+<h2>Codes</h2><br>
+    {% if codes %}
+        {% for code in codes %}
+        <p id={{code.code}}> 
+            <div id="code">
+            <b>{{code.code}}:</b> {{code.words}} 
+            <input type=submit value=Edit onclick="onEdit(this);">
+            </div>
+            <div id="editCode" style="display:none">
+            <b>{{code.code}}:</b> <input value="{{code.words}}" type=text size=30 id="{{code.code}}">
+            <input type=submit value="Update Code" onclick="updateCode(this);">
+            </div>
+        </p>
+        {% endfor %}
+    {% else %}
+    No codes yet
+    {% endif %}
+  {% endif %}
+
+
+<script type="text/javascript">
+    
+    function onEdit(el){
+        el.parentElement.style.display='none';
+        el.parentElement.nextElementSibling.style.display='block';
+        }
+    
+    function updateCode(el){
+        var codeWords = el.previousElementSibling.value;
+        var codeName = el.previousElementSibling.id;
+        console.log(codeName);
+        runPyScript(codeWords, codeName, '/update')
+        window.location.replace('/main')
+    }
+    
+function runPyScript(input1, input2, dest){
+    var jqXHR = $.ajax({
+        type: "POST",
+        url: dest,
+        async: false,
+        data: {data1: input1,
+              data2: input2}
+    });
+    return jqXHR.responseText;
+}
+    
+</script>
+
+{% endblock %}

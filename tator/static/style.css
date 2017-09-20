@@ -1,12 +1,18 @@
-body            { font-family: sans-serif; background: #eee; }
+body            { font-family: sans-serif; background: #89bdd3; }
 a, h1, h2       { color: #377ba8; }
 h1, h2          { font-family: 'Georgia', serif; margin: 0; }
 h1              { border-bottom: 2px solid #eee; }
 h2              { font-size: 1.2em; }
 table, th, td   { border: 1px solid black;}
 
-.page           { margin: 2em auto; width: 35em; border: 5px solid #ccc;
-                  padding: 0.8em; background: white; }
+.page           { border-radius: 20px;      
+                margin: 2em auto; 
+                width: 35em; 
+                border: 5px solid #9ad3de;
+                  padding: 0.8em; 
+                background: white;
+                box-shadow: 10px 10px 5px #888888;
+                    }
 .entries        { list-style: none; margin: 0; padding: 0; }
 .entries li     { margin: 0.8em 1.2em; }
 .entries li h2  { margin-left: -1em; }
@@ -17,3 +23,15 @@ table, th, td   { border: 1px solid black;}
 .flash          { background: #cee5F5; padding: 0.5em;
                   border: 1px solid #aacbe2; }
 .error          { background: #f0d6d6; padding: 0.5em; }
+.databutton {
+    background-color: #2555a3; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 5px #888888;
+}

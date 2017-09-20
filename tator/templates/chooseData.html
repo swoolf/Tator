@@ -2,24 +2,39 @@
 {% block body %}
   {% if session.logged_in %}
 
-Click a data Source to begin: 
+Click a data Source to begin: <br><br>
+<div style="text-align:center">
+    <td>
+      <form><input type="submit" value="Parachute" class="databutton"> - <input type="submit" value="Interlace" class="databutton"> - <input type="button" value="Upload Data" onclick="showUpload();" class="databutton"></form>
+    </td>
+    <br>
 
-
-<form action = "{{ url_for('web_funcs.initData') }}" method = "post" class=clear-code>
-        <input type="submit" value="Parachute Data" />
+    <!--
+    <form action = "{{ url_for('web_funcs.initData') }}" method = "post" class=clear-code>
+        <input type="submit" value="Parachute Data" class="databutton"/>
         <input type="hidden" name="data" value="parachute">
+        <input type="hidden" name="file" value="parachute">
     </form>
-<form action = "{{ url_for('web_funcs.initData') }}" method = "post" class=clear-code>
-        <input type="submit" value="Interlace Data" />
+    <br>
+    <form action = "{{ url_for('web_funcs.initData') }}" method = "post" class=clear-code>
+        <input type="submit" value="Interlace Data" class="databutton"/>
         <input type="hidden" name="data" value="interlace">
+        <input type="hidden" name="file" value="interlace">
     </form>
-<form action = "{{ url_for('web_funcs.initData') }}" method = "post" class=clear-code>
-        <input type="submit" value="Add Your Data" />
-        <input type="hidden" name="data" value="add">
-    </form>
-{% if add %}
-    We would like that to work too! (In progress...)
-{% endif %}
+    -->
+    <form action = "{{ url_for('web_funcs.upload_file') }}" method = "POST" enctype = "multipart/form-data" style="display:none" id="upload">
+             <input type = "file" name = "file"/>
+            <input type="hidden" name="data" value="new">
+             <input type = "submit" />
+          </form>
+</div>
+<script type="text/javascript">
+    
+    function showUpload(){
+        document.getElementById("upload").style.display='block'
+    }
+    
+</script>
 
     {% endif %}
 {% endblock %}

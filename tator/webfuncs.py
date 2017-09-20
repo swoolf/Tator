@@ -7,6 +7,7 @@ import textTools
 import StringIO
 import csv 
 import re
+from werkzeug import secure_filename
     
 web_funcs = Blueprint('web_funcs', __name__,template_folder='templates')
 
@@ -27,13 +28,8 @@ def post():
     cw = csv.writer(si)
     for entry in cur.fetchall():
         entries.append([entry[0]])
-        print [entry]
-        try:
-            cw.writerows( [entry] )
-        except:
-            txt= re.sub(u"\u2014", "-", entry[0] )
-            txt = re.sub(u"\u2019", "'", txt )
-            cw.writerows( [ [txt], [entry[1]] ] )
+        text = [entry[0].encode('ascii', 'ignore'), entry[1].encode('ascii', 'ignore') ]
+        cw.writerows( [text] )
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=tator_data.csv"
     output.headers["Content-type"] = "text/csv"
@@ -43,6 +39,17 @@ def post():
 @web_funcs.route('/newCode')
 def newCodePage():
     return render_template('newCode.html')
+
+#Page to edit/see word clusters
+@web_funcs.route('/editCodes')
+def editCodes(): 
+    db = get_db()
+    cur = db.execute('select code, text, IDnum from entries order by id')
+    entries = cur.fetchall()
+    cur = db.execute('SELECT code, words from codes')
+    codes = cur.fetchall()
+    print codes
+    return render_template('editCodes.html', entries= entries, codes=codes)
 
 #Given a few key words, generate list of new words to present to user
 @web_funcs.route('/test', methods=['GET', 'POST'])
@@ -56,6 +63,7 @@ def getWordList():
     entries=[]
     for entry in cur.fetchall():
         entries.append(entry[0])
+        
     #Get 15 most common words
     allWords = textTools.getCorpus(entries)
     newWords = textTools.getAntSyn(coreWords, allWords)
@@ -66,6 +74,22 @@ def getWordList():
     print newWords
     return nextWord()
 
+#UpdateCodes from editCode page
+@web_funcs.route('/update', methods=['GET','POST'])
+def updateCodes():
+    global newWords, coreWords, codeName, wordCount#, allWords
+    codeName = request.form['data2']
+    coreWords = nltk.word_tokenize(request.form['data1'])
+    
+    #Remove existing code 
+    db=get_db()
+    db.execute('delete from codes where code = (?)', [codeName])
+    db.execute('UPDATE entries SET code = ? WHERE code = ?', ['',codeName] )
+    db.commit()
+    
+    codeDoc()
+    return ''
+    
 #Present next word to user [Need to do in JS!]
 @web_funcs.route('/nextWord', methods=['GET', 'POST'])
 def nextWord():
@@ -80,7 +104,7 @@ def nextWord():
     return newWords[wordCount-1]
 
 #Show entries to user
-@web_funcs.route('/')
+@web_funcs.route('/main')
 def show_entries():
     db = get_db()
     cur = db.execute('select code, text, IDnum from entries order by id')
@@ -90,8 +114,9 @@ def show_entries():
     return render_template('show_entries.html', entries=entries, codes=codes)
 
 #Page for user to choose data and upload their own data
-@web_funcs.route('/chooseData')
+@web_funcs.route('/')
 def chooseData():
+    session['logged_in'] = True
     db = get_db()
     cur = db.execute('select code, text, IDnum from entries order by id')
     entries = cur.fetchall()
@@ -102,10 +127,20 @@ def chooseData():
 #Initialize database
 @web_funcs.route('/initData', methods=['POST'])
 def initData():
-    if request.form['data']=='add':
-        return render_template('chooseData.html', add=True)
-    init_db(source=request.form['data'])
+#    if request.form['data']=='add':
+#        return render_template('chooseData.html', add=True)
+    print request.form['file']
+    init_db(source=request.form['data'], path=request.form['file'])
     return redirect(url_for('web_funcs.show_entries'))
+
+@web_funcs.route('/uploader', methods = ['GET', 'POST'])
+def upload_file():
+   if request.method == 'POST':
+        f = request.files['file']
+        path = 'uploads/'+secure_filename(f.filename)
+        f.save(path)
+        init_db(source=request.form['data'], path=path)
+        return redirect(url_for('web_funcs.show_entries'))
     
 #Given coreWords, code document. 
 def codeDoc():
@@ -176,29 +211,3 @@ def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('web_funcs.show_entries')) 
-
-######################################
-#???Old implementation, I think
-#@web_funcs.route('/add', methods=['POST'])
-#def newCode_entry():
-#    print 'add'
-#    db=get_db()
-#    wordBank=[]
-#    for word in nltk.word_tokenize(request.form['Words']):
-#        wordBank.append(word)
-#    cur = db.execute('select code, text, id from entries')
-#    rows=cur.fetchall()
-#    for row in rows:
-#        for word in nltk.word_tokenize(row[1]):
-#            if word in wordBank:
-#                db.execute('UPDATE entries SET code = ? WHERE id = ?', [request.form['codeID'],row[2]])
-#                db.commit()
-#                break
-#    print(wordBank)
-#    db.execute('INSERT into codes (code, words) values (?,?)',[request.form['codeID'],' '.join(wordBank)])
-#    db.commit()
-#    cur = db.execute('select code, words, id from codes')
-#    rows=cur.fetchall()
-#    print rows
-#    flash('New Code Entered')
-#    return redirect(url_for('show_entries'))

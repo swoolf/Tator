@@ -22,8 +22,8 @@ function onCodeButton(){
     var codeID = document.getElementById("codeID").value;
     var codeWords = document.getElementById("Words").value;
     document.getElementById("demo").style.display='none';
-    
     document.getElementById("header").style.display='block';
+    
     curWord = runPyScript(codeWords, codeID, "/test");
     document.getElementById("header").innerHTML = "<strong>"+ codeID +": </strong>" + codeWords;
     checkWord(curWord);
@@ -37,13 +37,13 @@ function checkWord(word){
     
 function onYes(){
     nextWord = runPyScript("yes", "none" ,"/nextWord");
-    if (nextWord == '3nd'){window.location.replace('/');}
+    if (nextWord == '3nd'){window.location.replace('/main');}
     else{checkWord(nextWord);}
 }
 
 function onNo(){
     nextWord = runPyScript("no", "none" ,"/nextWord");
-    if (nextWord == '3nd'){window.location.replace('/');}
+    if (nextWord == '3nd'){window.location.replace('/main');}
     else{checkWord(nextWord);}
 }
     

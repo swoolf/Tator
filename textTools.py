@@ -5,7 +5,7 @@ from nltk.tag import pos_tag
 from nltk.corpus import wordnet
 import operator
 
-stopWordList = stopwords.words('english') + ["?","'s","'ll","n't"]
+stopWordList = stopwords.words('english') + ["?","'s","'ll","n't", "'re"]
 
 #Get all words, and counts from an array of text data
 def getCorpus(entries):
@@ -13,7 +13,7 @@ def getCorpus(entries):
     for entry in entries: 
         for word in nltk.word_tokenize(entry):
             word = word.lower()
-            if word not in stopWordList and ":" not in word:
+            if word not in stopWordList and ":" not in word and "*" not in word:
                 if word not in allWords:
                     allWords[word]=1
                 else:
@@ -29,7 +29,7 @@ def getTopWords(coreWords, entries):
             properNouns=[word for word,pos in pos_tag(nltk.word_tokenize(entry)) if pos == 'NNP']
             newData.append(entry)
             for word in nltk.word_tokenize(entry):
-                if word.lower() not in stopWordList and word not in properNouns and len(word)>2 and ":" not in word:
+                if word.lower() not in stopWordList and word not in properNouns and len(word)>2 and ":" not in word and "*" not in word:
                     lword=word.lower()
                     if lword not in allWords.keys():
                         allWords[lword]=1.0
@@ -62,7 +62,7 @@ def getAntSyn(coreWords, allWords):
                 if l.antonyms():
                     antonyms.append(l.antonyms()[0].name() )
         for item in synonyms + antonyms:
-            if item in allWords and item not in synAnt and item not in coreWords:
+            if item in allWords and '_' not in item and item not in synAnt and item not in coreWords:
                 synAnt.append(item)
     return synAnt
             
