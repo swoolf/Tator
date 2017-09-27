@@ -74,6 +74,22 @@ def getWordList():
     print newWords
     return nextWord()
 
+@web_funcs.route('/test2', methods=['GET', 'POST'])
+def getWordList2():
+    global newWords, coreWords, codeName, wordCount
+    wordCount=0
+    codeName=request.form['data2']
+    coreWords = nltk.word_tokenize(request.form['data1'])
+    
+    db=get_db()
+    cur = db.execute('select text from entries order by id')
+    entries=[]
+    for entry in cur.fetchall():
+        entries.append(entry[0])
+    wordList = textTools.getWordList(coreWords, entries)
+    newWords = wordList +['3nd']
+    return nextWord()
+
 #UpdateCodes from editCode page
 @web_funcs.route('/update', methods=['GET','POST'])
 def updateCodes():
@@ -129,8 +145,8 @@ def chooseData():
 def initData():
 #    if request.form['data']=='add':
 #        return render_template('chooseData.html', add=True)
-    print request.form['file']
-    init_db(source=request.form['data'], path=request.form['file'])
+    print request.form['submit']
+    init_db(source = request.form['submit'])
     return redirect(url_for('web_funcs.show_entries'))
 
 @web_funcs.route('/uploader', methods = ['GET', 'POST'])

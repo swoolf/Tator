@@ -24,7 +24,7 @@ function onCodeButton(){
     document.getElementById("demo").style.display='none';
     document.getElementById("header").style.display='block';
     
-    curWord = runPyScript(codeWords, codeID, "/test");
+    curWord = runPyScript(codeWords, codeID, "/test2");
     document.getElementById("header").innerHTML = "<strong>"+ codeID +": </strong>" + codeWords;
     checkWord(curWord);
 }

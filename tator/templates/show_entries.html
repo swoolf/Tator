@@ -2,30 +2,37 @@
 {% block body %}
   {% if session.logged_in %}
 
-    <form action="/newCode">
-        <input type="submit" value="Make a new code!" />
-    </form>
-    <form action = "{{ url_for('web_funcs.clearCodes') }}" method = "post" class=clear-code>
-        <input type="submit" style="float: right;" value="Clear Codes" />
-    </form><br>
-    <form action="/editCodes">
-        <input type="submit" value="Edit Codes" style="float:right;"/><br>
-    </form>
-    <form style="float: left;" action="/download">
-        <input type="submit" value="Download to csv" />
-    </form>
-    <form style="float: left;" action="/">
-        <input type="submit" value="Choose Data" />
-    </form>
-    <form style="float: right;" action = "{{url_for('web_funcs.sortByCode')}}" method="post" class=sortByCode>
-        <select name="choice" >
-            <option value="none">None</option>
-            {% for code in codes %}
-                <option value="{{code.code}}">{{code.code}}</option>
-            {% endfor %}
-        </select>
-        <input type="submit" style="float: right;" value="Sort By Code" />
-    </form>
+<hr>
+    <div class="buttonDiv">
+        <div style="margin: 10px 10px 10px 10px">
+            <form action="/newCode">
+                <input type="submit" value="Make a new code!" class="codeButtons"/>
+            </form>
+            <form action = "{{ url_for('web_funcs.clearCodes') }}" method = "post" class=clear-code>
+                <input type="submit" style="float: right;" value="Clear Codes" />
+            </form><br>
+            <form action="/editCodes">
+                <input type="submit" value="Edit Codes" style="float:right;"/><br>
+            </form>
+            <form style="float: left;" action="/download">
+                <input type="submit" value="Download to csv" />
+            </form>
+            <form style="float: left;" action="/">
+                <input type="submit" value="Choose Data" />
+            </form>
+            <form style="float: right;" action = "{{url_for('web_funcs.sortByCode')}}" method="post" class=sortByCode>
+                <select name="choice" >
+                    <option value="none">None</option>
+                    {% for code in codes %}
+                        <option value="{{code.code}}">{{code.code}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" style="float: right;" value="Sort By Code" />
+            </form>
+            <br>
+        </div>
+    </div>
+<hr>
 <table style="width:100%;table-layout:fixed" border=1>
     <col width="5%">
     <col width="80%">

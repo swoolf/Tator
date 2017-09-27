@@ -29,12 +29,12 @@ def get_db():
 def addData2DB(db, source=None, path=None):
     textLen = 40
     print path, 'addData2db'
-    if source=='parachute' or source==None :
+    if source=='Parachute' or source==None :
         path = "tator/chelsea stuff/SCR wind testing timeline.xlsx"
         sheetNum=5
         colNum=2
         return addDataFormatted(db)
-    elif source=='interlace':
+    elif source=='Interlace':
         path = "tator/interlace/data.xls"
         sheetNum=0
         colNum=2

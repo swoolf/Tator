@@ -5,7 +5,9 @@
 Click a data Source to begin: <br><br>
 <div style="text-align:center">
     <td>
-      <form><input type="submit" value="Parachute" class="databutton"> - <input type="submit" value="Interlace" class="databutton"> - <input type="button" value="Upload Data" onclick="showUpload();" class="databutton"></form>
+      <form action = "{{ url_for('web_funcs.initData') }}" method = "post" class=clear-code>   <input type="submit" name="submit" value="Parachute" class="databutton"> - 
+        <input type="submit" name="submit" value="Interlace" class="databutton"> - 
+        <input type="button" value="Upload Data" onclick="showUpload();" class="databutton"></form>
     </td>
     <br>
 

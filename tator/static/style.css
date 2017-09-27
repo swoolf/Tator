@@ -35,3 +35,20 @@ table, th, td   { border: 1px solid black;}
     border-radius: 10px;
     box-shadow: 1px 1px 5px #888888;
 }
+.buttonDiv{
+    background-color: lightsteelblue;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+.codeButtons {
+    background-color: whitesmoke; /* Green */
+    border: none;
+    color: black;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px #888888;
+}
