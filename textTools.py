@@ -6,17 +6,24 @@ from nltk.corpus import wordnet
 import operator
 import urllib2
 import json
+from random import shuffle
 
 stopWordList = stopwords.words('english') + ["?","'s","'ll","n't", "'re"]
 
-def getWordList(coreWords, entries):
+def getWordList(coreWords, allWords, entries):
     synAnt = getAntSyn(coreWords)
-    topWords = getCooccurWords(coreWords, entries)
+    topWords = getCooccurWords(coreWords, allWords, entries)
     w2vs = checkWord2Vec(coreWords)
+    shuffle(w2vs)
+    shuffle(synAnt)
     #DictPi?
     
-    wordList = list(set( synAnt + w2vs + topWords[:10] ))
+    wordList = list(set( synAnt[:10] + w2vs[:10] + topWords[:10] ))
     wordList = [a for a in wordList if a not in coreWords and '_' not in a]
+    print allWords
+    print 'start'
+#    wordList = [a for a in wordList if a in allWords]
+    print 'end'
     return wordList
 
 #Get all words, and counts from an array of text data
@@ -33,7 +40,7 @@ def getCorpus(entries):
     return allWords
 
 #Returns an array with the words most often seen with coreWords list
-def getCooccurWords(coreWords, entries):
+def getCooccurWords(coreWords, allWords, entries):
     newData=[];
     allWords={}
     for entry in entries:

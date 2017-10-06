@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+
+<script type="text/javascript">
+    
+    window.onload = function() {
+//    var offset=-4;
+//    var d = new Date();
+//    var n = d.getUTCHours();
+//    var m = d.getUTCMinutes();
+//    console.log(n+offset, m);
+        console.log(getCBIHour() );
+    
+};
+    
+function getCBIHour(){
+    var offset=-4;
+    var d = new Date();
+    var n = d.getUTCHours();
+    return n;
+};
+    
+</script>
+
+{% endblock %}

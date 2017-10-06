@@ -15,7 +15,7 @@ newWords=[]
 coreWords=[]
 codeName='code'
 wordCount=0
-#allWords={}
+allWords={}
 
 #Download current DB into a csv
 @web_funcs.route('/download')
@@ -52,27 +52,31 @@ def editCodes():
     return render_template('editCodes.html', entries= entries, codes=codes)
 
 #Given a few key words, generate list of new words to present to user
-@web_funcs.route('/test', methods=['GET', 'POST'])
-def getWordList():
-    global newWords, coreWords, codeName, wordCount#, allWords
-    wordCount=0
-    codeName=request.form['data2']
-    coreWords = nltk.word_tokenize(request.form['data1'])
-    db=get_db()
-    cur = db.execute('select text from entries order by id')
-    entries=[]
-    for entry in cur.fetchall():
-        entries.append(entry[0])
-        
-    #Get 15 most common words
-    allWords = textTools.getCorpus(entries)
-    newWords = textTools.getAntSyn(coreWords, allWords)
-    for d in textTools.getTopWords(coreWords, entries):
-        if d[0] not in newWords and d[0] not in coreWords:
-            newWords.append(d[0])
-    newWords=newWords[:15]+['3nd']#########
-    print newWords
-    return nextWord()
+#@web_funcs.route('/test', methods=['GET', 'POST'])
+#def getWordList():
+#    global newWords, coreWords, codeName, wordCount#, allWords
+#    wordCount=0
+#    codeName=request.form['data2']
+#    coreWords = nltk.word_tokenize(request.form['data1'])
+#    db=get_db()
+#    cur = db.execute('select text from entries order by id')
+#    entries=[]
+#    for entry in cur.fetchall():
+#        entries.append(entry[0])
+#        
+#    #Get 15 most common words
+#    allWords = textTools.getCorpus(entries)
+#    newWords = textTools.getAntSyn(coreWords, allWords)
+#    for d in textTools.getTopWords(coreWords, entries):
+#        if d[0] not in newWords and d[0] not in coreWords:
+#            newWords.append(d[0])
+#    finalWords=[]
+#    for a in newWords: 
+#        if a in allWords: 
+#            finalWords.append(a)
+#    newWords=finalWords[:15]+['3nd']#########
+#    print newWords, "here"
+#    return nextWord()
 
 @web_funcs.route('/test2', methods=['GET', 'POST'])
 def getWordList2():
@@ -86,7 +90,9 @@ def getWordList2():
     entries=[]
     for entry in cur.fetchall():
         entries.append(entry[0])
-    wordList = textTools.getWordList(coreWords, entries)
+        
+    wordList = textTools.getWordList(coreWords, allWords, entries)
+    print 'test2', wordList
     newWords = wordList +['3nd']
     return nextWord()
 
@@ -140,13 +146,23 @@ def chooseData():
     codes = cur.fetchall()
     return render_template('chooseData.html', add=False)
 
+
 #Initialize database
 @web_funcs.route('/initData', methods=['POST'])
 def initData():
+    global allWords
 #    if request.form['data']=='add':
 #        return render_template('chooseData.html', add=True)
     print request.form['submit']
     init_db(source = request.form['submit'])
+    
+    db=get_db()
+    cur = db.execute('select text from entries order by id')
+    entries=[]
+    for entry in cur.fetchall():
+        entries.append(entry[0])
+    allWords = textTools.getCorpus(entries)
+    
     return redirect(url_for('web_funcs.show_entries'))
 
 @web_funcs.route('/uploader', methods = ['GET', 'POST'])
@@ -171,7 +187,7 @@ def codeDoc():
     entries=[]
     for entry in cur.fetchall():
         entries.append(entry[0])
-    allWords = textTools.getCorpus(entries)
+#    allWords = textTools.getCorpus(entries)
     
     for row in rows:
         score = textTools.calculateScore(row[1], coreWords, allWords)
