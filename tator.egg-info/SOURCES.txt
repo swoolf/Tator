@@ -21,3 +21,4 @@ tator/templates/layout.html
 tator/templates/login.html
 tator/templates/newCode.html
 tator/templates/show_entries.html
+tator/templates/timer.html

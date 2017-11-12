@@ -8,6 +8,7 @@ import StringIO
 import csv 
 import re
 from werkzeug import secure_filename
+import logging
     
 web_funcs = Blueprint('web_funcs', __name__,template_folder='templates')
 
@@ -33,11 +34,13 @@ def post():
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=tator_data.csv"
     output.headers["Content-type"] = "text/csv"
+    logging.logThis('downloaded')##################
     return output
     
 #Pointer to a generate a new code
 @web_funcs.route('/newCode')
 def newCodePage():
+    logging.logThis('newCode')#####################
     return render_template('newCode.html')
 
 #Page to edit/see word clusters
@@ -49,6 +52,7 @@ def editCodes():
     cur = db.execute('SELECT code, words from codes')
     codes = cur.fetchall()
     print codes
+    logging.logThis('editCodes')###################
     return render_template('editCodes.html', entries= entries, codes=codes)
 
 #Given a few key words, generate list of new words to present to user
@@ -93,6 +97,7 @@ def getWordList2():
         
     wordList = textTools.getWordList(coreWords, allWords, entries)
     print 'test2', wordList
+    logging.logThis('getWordList2 '+ str(coreWords) + str(wordList)) ######################
     newWords = wordList +['3nd']
     return nextWord()
 
@@ -102,7 +107,7 @@ def updateCodes():
     global newWords, coreWords, codeName, wordCount#, allWords
     codeName = request.form['data2']
     coreWords = nltk.word_tokenize(request.form['data1'])
-    
+    logging.logThis('updateCodes ' + request.form['data1'])###################
     #Remove existing code 
     db=get_db()
     db.execute('delete from codes where code = (?)', [codeName])
@@ -155,7 +160,7 @@ def initData():
 #        return render_template('chooseData.html', add=True)
     print request.form['submit']
     init_db(source = request.form['submit'])
-    
+    logging.logThis('initData ' + request.form['submit'])
     db=get_db()
     cur = db.execute('select text from entries order by id')
     entries=[]
@@ -194,6 +199,7 @@ def codeDoc():
         if score > 0: 
             db.execute('UPDATE entries SET code = ? WHERE id = ?', [codeName,row[2]])
             db.commit()
+    logging.logThis('codeDoc ' + str(coreWords))##################
     flash('New Code Entered')
 
 #Clear codes from document
@@ -204,6 +210,7 @@ def clearCodes():
     db.execute('DELETE FROM codes')
     db.commit()
     print("Clear Codes")
+    logging.logThis('clearCodes')####################
     return redirect(url_for('web_funcs.show_entries'))
 
 #Show only sentances for a specific code [update in JS!]
@@ -220,6 +227,7 @@ def sortByCode():
         entries = cur.fetchall()
     cur = db.execute('SELECT code, words from codes')
     codes = cur.fetchall()
+    logging.logThis('sortByCode ' + request.form['choice'])######################
     return render_template('show_entries.html', entries=entries, codes=codes)
 
 #User Login

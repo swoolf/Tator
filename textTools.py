@@ -1,5 +1,5 @@
 import nltk
-from nltk.stem.lancaster import LancasterStemmer
+from nltk.stem.lancaster import LancasterStemmer 
 from nltk.corpus import stopwords
 from nltk.tag import pos_tag
 from nltk.corpus import wordnet
@@ -11,14 +11,19 @@ from random import shuffle
 stopWordList = stopwords.words('english') + ["?","'s","'ll","n't", "'re"]
 
 def getWordList(coreWords, allWords, entries):
+    internet = False
     synAnt = getAntSyn(coreWords)
-    topWords = getCooccurWords(coreWords, allWords, entries)
-    w2vs = checkWord2Vec(coreWords)
-    shuffle(w2vs)
     shuffle(synAnt)
+    topWords = getCooccurWords(coreWords, allWords, entries)
+    if (internet):
+        w2vs = checkWord2Vec(coreWords)
+        shuffle(w2vs)
     #DictPi?
     
-    wordList = list(set( synAnt[:10] + w2vs[:10] + topWords[:10] ))
+        wordList = list(set( synAnt[:10] + w2vs[:10] + topWords[:10] ))
+    else:
+        wordList = list(set( synAnt[:10] + topWords[:10] ))
+        
     wordList = [a for a in wordList if a not in coreWords and '_' not in a]
     print allWords
     print 'start'
@@ -59,9 +64,11 @@ def getCooccurWords(coreWords, allWords, entries):
 #Calculates a relevance score for a sentance given coreWords
 def calculateScore(sentance, coreWords, allWords=None):
     score = 0
+    st = LancasterStemmer()
+    coreWordsStem = [st.stem(word) for word in coreWords]
     for word in nltk.word_tokenize(sentance):
-        word= word.lower()
-        if word in coreWords:
+        word= st.stem( word.lower() )
+        if word in coreWordsStem:
             if allWords:
                 score+=1.0/allWords[word]
             else: 
