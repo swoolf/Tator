@@ -1,6 +1,7 @@
 MANIFEST.in
 tator/__init__.py
 tator/dataBase.py
+tator/logging.py
 tator/schema.sql
 tator/tator.py
 tator/webfuncs.py

@@ -67,3 +67,142 @@ downloaded
 2017-11-12 11:19:14 editCodes
 2017-11-12 11:19:17 updateCodes test looks
 2017-11-12 11:19:18 codeDoc [u'test', u'looks']
+2017-11-12 17:02:49 newCode
+2017-11-12 17:02:57 getWordList2 [u'test'][u'essay', u'water', u'think', u'run', u'like', u'prove', u'air', u'screen', u'yeah', u'quiz', u'try', u'trial', u'examine', u'elea', u'examination', u'jordan', u'hold', u'alyssa', u'cloud']
+2017-11-12 17:03:06 codeDoc [u'test']
+2017-11-12 17:03:10 sortByCode test
+2017-11-12 17:03:15 sortByCode none
+2017-11-12 17:03:20 sortByCode none
+2017-11-12 17:04:02 sortByCode none
+2017-11-12 17:04:04 newCode
+2017-11-12 17:04:13 getWordList2 [u'cloud'][u'sully', u'defile', u'think', u'hold', u'like', u'elea', u'overcast', u'yeah', u'taint', u'alyssa', u'water', u'swarm', u'air', u'jordan', u'corrupt', u'becloud', u'dapple', u'mist', u'obnubilate']
+2017-11-12 17:04:23 codeDoc [u'cloud']
+2017-11-12 17:06:03 editCodes
+2017-11-12 17:06:06 updateCodes cloud
+2017-11-12 17:06:06 codeDoc [u'cloud']
+2017-11-12 17:06:21 editCodes
+2017-11-12 17:06:25 updateCodes cloud look
+2017-11-12 17:06:25 codeDoc [u'cloud', u'look']
+2017-11-12 17:06:52 clearCodes
+2017-11-12 17:07:23 clearCodes
+2017-11-12 17:07:24 editCodes
+2017-11-12 17:07:27 newCode
+2017-11-12 17:07:40 getWordList2 [u'cloud', u'look'][u'elea', u'think', u'appear', u'attend', u'feel', u'air', u'await', u'yeah', u'alyssa', u'water', u'see', u'fog', u'jordan', u'front', u'dapple', u'hold', u'obnubilate', u'like']
+2017-11-12 17:07:48 codeDoc [u'cloud', u'look']
+2017-11-12 17:07:58 editCodes
+2017-11-12 17:08:04 updateCodes cloud
+2017-11-12 17:08:04 codeDoc [u'cloud']
+2017-11-12 17:08:08 clearCodes
+2017-11-12 17:08:51 newCode
+2017-11-12 17:09:02 getWordList2 [u'cloud', u'look'][u'count', u'elea', u'search', u'hold', u'yeah', u'think', u'alyssa', u'water', u'see', u'air', u'jordan', u'becloud', u'seem', u'mist', u'expression', u'spirit', u'bet', u'like']
+2017-11-12 17:09:12 codeDoc [u'cloud', u'look']
+2017-11-12 17:09:15 editCodes
+2017-11-12 17:09:19 updateCodes cloud
+2017-11-12 17:09:19 codeDoc [u'cloud']
+2017-11-12 17:09:32 editCodes
+2017-11-12 17:09:36 updateCodes cloud web
+2017-11-12 17:09:36 codeDoc [u'cloud', u'web']
+2017-11-12 17:09:43 editCodes
+2017-11-12 17:09:46 updateCodes cloud web science
+2017-11-12 17:09:46 codeDoc [u'cloud', u'web', u'science']
+2017-11-12 17:09:48 editCodes
+2017-11-12 17:09:53 updateCodes cloud science
+2017-11-12 17:09:53 codeDoc [u'cloud', u'science']
+2017-11-12 17:11:04 editCodes
+2017-11-12 17:11:11 updateCodes rain water
+2017-11-12 17:11:11 codeDoc [u'rain', u'water']
+2017-11-12 17:11:34 newCode
+2017-11-12 17:11:43 getWordList2 [u'though', u'think', u'idea'][u'elea', u'hold', u'cerebrate', u'forget', u'recall', u'mind', u'yeah', u'recollect', u'like', u'water', u'theme', u'air', u'jordan', u'alyssa', u'estimate', u'estimation', u'cogitate', u'cloud', u'mean']
+2017-11-12 17:12:01 codeDoc [u'though', u'think', u'idea']
+2017-11-12 17:12:15 editCodes
+2017-11-12 17:12:20 updateCodes thought think idea
+2017-11-12 17:12:20 codeDoc [u'thought', u'think', u'idea']
+2017-11-12 17:12:43 newCode
+2017-11-12 17:12:52 getWordList2 [u'agree', u'disagree'][u'yeah', u'elea', u'accord', u'gibe', u'like', u'fit', u'consort', u'dissent', u'think', u'alyssa', u'water', u'air', u'jibe', u'harmonize', u'jordan', u'hold', u'check', u'cloud']
+2017-11-12 17:13:09 codeDoc [u'agree', u'disagree', u'fit']
+2017-11-12 17:13:14 sortByCode agreement
+2017-11-12 17:13:31 editCodes
+2017-11-12 17:13:36 updateCodes agree disagree
+2017-11-12 17:13:36 codeDoc [u'agree', u'disagree']
+2017-11-12 17:14:22 sortByCode none
+2017-11-12 17:14:27 editCodes
+2017-11-12 17:14:29 updateCodes agree disagree
+2017-11-12 17:14:29 codeDoc [u'agree', u'disagree']
+2017-11-12 17:14:46 sortByCode test
+2017-11-12 17:16:10 sortByCode test
+2017-11-12 17:16:16 sortByCode agreement
+2017-11-12 17:16:29 editCodes
+2017-11-12 17:16:31 updateCodes rain water
+2017-11-12 17:16:31 codeDoc [u'rain', u'water']
+2017-11-12 17:18:29 clearCodes
+2017-11-12 17:18:36 newCode
+2017-11-12 17:18:46 getWordList2 [u'cloud'][u'sully', u'defile', u'think', u'hold', u'befog', u'like', u'elea', u'overcast', u'yeah', u'taint', u'alyssa', u'water', u'swarm', u'air', u'jordan', u'becloud', u'dapple', u'mist', u'obnubilate']
+2017-11-12 17:18:55 codeDoc [u'cloud']
+2017-11-12 17:18:59 editCodes
+2017-11-12 17:19:03 updateCodes rain
+2017-11-12 17:19:03 codeDoc [u'rain']
+2017-11-12 17:22:13 editCodes
+2017-11-12 17:22:15 updateCodes rain
+2017-11-12 17:23:10 editCodes
+2017-11-12 17:23:12 updateCodes rain
+2017-11-12 17:24:15 editCodes
+2017-11-12 17:24:17 updateCodes rain
+2017-11-12 17:24:17 codeDoc [u'rain']
+2017-11-12 17:24:23 clearCodes
+2017-11-12 17:24:28 newCode
+2017-11-12 17:24:39 getWordList2 [u'rains'][u'rainfall', u'think', u'like', u'elea', u'pelting', u'yeah', u'rain', u'air', u'water', u'jordan', u'rainwater', u'hold', u'alyssa', u'cloud']
+2017-11-12 17:25:39 clearCodes
+2017-11-12 17:25:40 newCode
+2017-11-12 17:25:49 getWordList2 [u'rain'][u'rainfall', u'think', u'like', u'elea', u'pelting', u'yeah', u'air', u'water', u'jordan', u'rainwater', u'hold', u'alyssa', u'cloud']
+2017-11-12 17:25:56 codeDoc [u'rain']
+2017-11-12 17:26:05 editCodes
+2017-11-12 17:26:08 updateCodes rain cloud
+2017-11-12 17:26:08 codeDoc [u'rain', u'cloud']
+2017-11-12 17:26:14 editCodes
+2017-11-12 17:26:17 updateCodes rain
+2017-11-12 17:26:17 codeDoc [u'rain']
+2017-11-12 17:29:02 clearCodes
+2017-11-12 17:29:40 newCode
+2017-11-12 17:29:46 getWordList2 [u'try', u'test', u'do'][u'essay', u'elea', u'think', u'hold', u'like', u'adjudicate', u'suffice', u'yeah', u'serve', u'unmake', u'air', u'water', u'coif', u'hear', u'cloud', u'jordan', u'examination', u'practise', u'alyssa', u'bash']
+2017-11-12 17:29:57 codeDoc [u'try', u'test', u'do']
+2017-11-12 17:30:17 editCodes
+2017-11-12 17:30:23 updateCodes try test
+2017-11-12 17:30:23 codeDoc [u'try', u'test']
+2017-11-13 05:44:57 editCodes
+2017-11-13 05:45:03 clearCodes
+2017-11-13 05:48:19 newCode
+2017-11-13 05:48:30 getWordList2 [u'test'][u'essay', u'water', u'think', u'run', u'exam', u'prove', u'air', u'yeah', u'quiz', u'try', u'examine', u'elea', u'examination', u'tryout', u'jordan', u'hold', u'alyssa', u'cloud', u'like']
+2017-11-13 05:49:10 newCode
+2017-11-13 05:49:17 getWordList2 [u'test'][]
+2017-11-13 05:49:17 codeDoc [u'test']
+2017-11-13 05:49:50 newCode
+2017-11-13 05:49:57 getWordList2 [u'idea', u'think', u'thought'][]
+2017-11-13 05:49:57 codeDoc [u'idea', u'think', u'thought']
+2017-11-13 05:50:54 newCode
+2017-11-13 05:51:10 getWordList2 [u'agree', u'disagree'][u'yeah', u'elea', u'think', u'concur', u'like', u'discord', u'air', u'disaccord', u'correspond', u'alyssa', u'water', u'harmonise', u'jibe', u'cloud', u'dissent', u'jordan', u'hold', u'match']
+2017-11-13 05:51:33 codeDoc [u'agree', u'disagree', u'concur']
+2017-11-13 05:51:39 sortByCode hh
+2017-11-13 05:51:51 sortByCode none
+2017-11-13 05:54:19 clearCodes
+2017-11-13 06:17:07 clearCodes
+2017-11-13 06:17:38 newCode
+2017-11-13 06:17:46 getWordList2 [u'agree', u'disagree'][u'accord', u'consort', u'force', u'like', u'fit', u'concord', u'would', u'tally', u'discord', u'differ', u'cylinder', u'one', u'work', u'harmonise', u'mass', u'argument', u'hold', u'energy', u'block']
+2017-11-13 06:18:07 codeDoc [u'agree', u'disagree', u'argument']
+2017-11-13 06:18:10 sortByCode agree 
+2017-11-13 06:18:31 sortByCode agree 
+2017-11-13 06:18:44 sortByCode none
+2017-11-13 06:19:11 newCode
+2017-11-13 06:19:24 getWordList2 [u'idea', u'thought', u'suggestion'][u'one', u'cylinder', u'persuasion', u'force', u'remember', u'would', u'energy', u'mesmerism', u'argument', u'like', u'work', u'mentation', u'mass', u'proffer', u'estimate', u'estimation', u'opine', u'block', u'view']
+2017-11-13 06:19:44 codeDoc [u'idea', u'thought', u'suggestion', u'persuasion', u'remember']
+2017-11-13 06:19:47 sortByCode id
+2017-11-13 06:20:03 editCodes
+2017-11-13 06:20:08 updateCodes agree disagree argument think
+2017-11-13 06:20:08 codeDoc [u'agree', u'disagree', u'argument', u'think']
+2017-11-13 06:20:11 sortByCode id
+2017-11-13 06:20:15 sortByCode none
+2017-11-13 06:20:53 newCode
+2017-11-13 06:21:03 getWordList2 [u'friction', u'slide', u'slip'][u'parapraxis', u'chute', u'moorage', u'slither', u'like', u'glide', u'would', u'energy', u'work', u'cylinder', u'one', u'cutting', u'mass', u'block', u'gaffe', u'force', u'argument', u'slip-up', u'mooring', u'mistake']
+2017-11-13 06:21:28 codeDoc [u'friction', u'slide', u'slip', u'glide', u'force']
+2017-11-13 06:21:31 sortByCode friction
+2017-11-13 06:22:34 sortByCode none
+2017-11-13 08:10:10 clearCodes

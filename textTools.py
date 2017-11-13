@@ -26,9 +26,9 @@ def getWordList(coreWords, allWords, entries):
         
     wordList = [a for a in wordList if a not in coreWords and '_' not in a]
     print allWords
-    print 'start'
+#    print 'start'
 #    wordList = [a for a in wordList if a in allWords]
-    print 'end'
+#    print 'end'
     return wordList
 
 #Get all words, and counts from an array of text data
@@ -65,15 +65,17 @@ def getCooccurWords(coreWords, allWords, entries):
 def calculateScore(sentance, coreWords, allWords=None):
     score = 0
     st = LancasterStemmer()
+    boldWords=set()
     coreWordsStem = [st.stem(word) for word in coreWords]
     for word in nltk.word_tokenize(sentance):
-        word= st.stem( word.lower() )
-        if word in coreWordsStem:
+        stword= st.stem( word.lower() )
+        if stword in coreWordsStem:
+            boldWords.add(word)
             if allWords:
                 score+=1.0/allWords[word]
             else: 
                 score += 1
-    return score
+    return score, boldWords
 
 #Returns antonyms and synonyms for coreWords, and ensures ant/syn are in allWords
 def getAntSyn(coreWords):

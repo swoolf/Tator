@@ -49,7 +49,17 @@
     </tr>
 {% endfor %}
 </table>
+
+<script>
+
+{% for word in boldWords %}
+var replaced = $("table").html().replace(/{{word}}/gi ,"<b>{{word}}</b>");
+$("table").html(replaced);
+{% endfor %}
+
+</script>
     {% else %}
     Log in to play with some data!  
     {% endif %}
 {% endblock %}
+

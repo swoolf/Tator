@@ -13,6 +13,7 @@ import logging
 web_funcs = Blueprint('web_funcs', __name__,template_folder='templates')
 
 newWords=[]
+boldWords=set()
 coreWords=[]
 codeName='code'
 wordCount=0
@@ -133,12 +134,15 @@ def nextWord():
 #Show entries to user
 @web_funcs.route('/main')
 def show_entries():
+    global boldWords
     db = get_db()
     cur = db.execute('select code, text, IDnum from entries order by id')
     entries = cur.fetchall()
     cur = db.execute('SELECT code, words from codes')
     codes = cur.fetchall()
-    return render_template('show_entries.html', entries=entries, codes=codes)
+#    boldWords = ['clouds', 'look']
+    print boldWords 
+    return render_template('show_entries.html', entries=entries, codes=codes, boldWords=boldWords)
 
 #Page for user to choose data and upload their own data
 @web_funcs.route('/')
@@ -181,7 +185,7 @@ def upload_file():
     
 #Given coreWords, code document. 
 def codeDoc():
-    global coreWords, codeName#, allWords
+    global coreWords, codeName, boldWords#, allWords
     db=get_db()
     db.execute('INSERT into codes (code, words) values (?,?)',[codeName,' '.join(coreWords)])
     db.commit()
@@ -193,18 +197,23 @@ def codeDoc():
     for entry in cur.fetchall():
         entries.append(entry[0])
 #    allWords = textTools.getCorpus(entries)
-    
+#    boldWords=[] ##################################################################
     for row in rows:
-        score = textTools.calculateScore(row[1], coreWords, allWords)
+        score, bwords = textTools.calculateScore(row[1], coreWords, allWords)
         if score > 0: 
             db.execute('UPDATE entries SET code = ? WHERE id = ?', [codeName,row[2]])
             db.commit()
+            
+            boldWords=boldWords.union(bwords)
     logging.logThis('codeDoc ' + str(coreWords))##################
     flash('New Code Entered')
-
+    
+    
 #Clear codes from document
 @web_funcs.route('/clearCodes', methods=['POST'])
 def clearCodes():
+    global boldWords
+    boldWords=set()
     db=get_db()
     db.execute('UPDATE entries SET code=?',[' ']) 
     db.execute('DELETE FROM codes')
@@ -216,7 +225,7 @@ def clearCodes():
 #Show only sentances for a specific code [update in JS!]
 @web_funcs.route('/sortByCode', methods=['POST'])
 def sortByCode():
-    print "Sort By Code"
+    global boldWords
 #    return redirect(url_for('show_entries'))
     db = get_db()
     if request.form['choice'] != 'none':
@@ -228,7 +237,7 @@ def sortByCode():
     cur = db.execute('SELECT code, words from codes')
     codes = cur.fetchall()
     logging.logThis('sortByCode ' + request.form['choice'])######################
-    return render_template('show_entries.html', entries=entries, codes=codes)
+    return render_template('show_entries.html', entries=entries, codes=codes, boldWords=boldWords)
 
 #User Login
 @web_funcs.route('/login', methods=['GET', 'POST'])
