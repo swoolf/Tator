@@ -70,7 +70,7 @@ def calculateScore(sentance, coreWords, allWords=None):
     for word in nltk.word_tokenize(sentance):
         stword= st.stem( word.lower() )
         if stword in coreWordsStem:
-            boldWords.add(word)
+            boldWords.add(word.lower())
             if allWords:
                 score+=1.0/allWords[word]
             else: 

@@ -13,7 +13,7 @@ import logging
 web_funcs = Blueprint('web_funcs', __name__,template_folder='templates')
 
 newWords=[]
-boldWords=set()
+
 coreWords=[]
 codeName='code'
 wordCount=0
@@ -55,33 +55,6 @@ def editCodes():
     print codes
     logging.logThis('editCodes')###################
     return render_template('editCodes.html', entries= entries, codes=codes)
-
-#Given a few key words, generate list of new words to present to user
-#@web_funcs.route('/test', methods=['GET', 'POST'])
-#def getWordList():
-#    global newWords, coreWords, codeName, wordCount#, allWords
-#    wordCount=0
-#    codeName=request.form['data2']
-#    coreWords = nltk.word_tokenize(request.form['data1'])
-#    db=get_db()
-#    cur = db.execute('select text from entries order by id')
-#    entries=[]
-#    for entry in cur.fetchall():
-#        entries.append(entry[0])
-#        
-#    #Get 15 most common words
-#    allWords = textTools.getCorpus(entries)
-#    newWords = textTools.getAntSyn(coreWords, allWords)
-#    for d in textTools.getTopWords(coreWords, entries):
-#        if d[0] not in newWords and d[0] not in coreWords:
-#            newWords.append(d[0])
-#    finalWords=[]
-#    for a in newWords: 
-#        if a in allWords: 
-#            finalWords.append(a)
-#    newWords=finalWords[:15]+['3nd']#########
-#    print newWords, "here"
-#    return nextWord()
 
 @web_funcs.route('/test2', methods=['GET', 'POST'])
 def getWordList2():
@@ -134,15 +107,21 @@ def nextWord():
 #Show entries to user
 @web_funcs.route('/main')
 def show_entries():
-    global boldWords
     db = get_db()
     cur = db.execute('select code, text, IDnum from entries order by id')
     entries = cur.fetchall()
     cur = db.execute('SELECT code, words from codes')
     codes = cur.fetchall()
-#    boldWords = ['clouds', 'look']
-    print boldWords 
-    return render_template('show_entries.html', entries=entries, codes=codes, boldWords=boldWords)
+    cur = db.execute('SELECT bolds from codes')
+    boldString = cur.fetchall()
+    bsAll=''
+    for item in boldString: 
+        bsAll += ' ' + item[0]
+    try:
+        boldList = nltk.word_tokenize(bsAll)
+    except:
+        boldList = ''
+    return render_template('show_entries.html', entries=entries, codes=codes, boldWords=boldList)
 
 #Page for user to choose data and upload their own data
 @web_funcs.route('/')
@@ -185,19 +164,18 @@ def upload_file():
     
 #Given coreWords, code document. 
 def codeDoc():
-    global coreWords, codeName, boldWords#, allWords
+    global coreWords, codeName
     db=get_db()
-    db.execute('INSERT into codes (code, words) values (?,?)',[codeName,' '.join(coreWords)])
+    db.execute('INSERT into codes (code, words, bolds) values (?,?,?)',[codeName,' '.join(coreWords), ' '])
     db.commit()
     cur = db.execute('select code, text, id from entries')
     rows=cur.fetchall()
     
     cur = db.execute('select text from entries order by id')
     entries=[]
+    boldWords=set()
     for entry in cur.fetchall():
         entries.append(entry[0])
-#    allWords = textTools.getCorpus(entries)
-#    boldWords=[] ##################################################################
     for row in rows:
         score, bwords = textTools.calculateScore(row[1], coreWords, allWords)
         if score > 0: 
@@ -205,15 +183,15 @@ def codeDoc():
             db.commit()
             
             boldWords=boldWords.union(bwords)
+    db.execute('UPDATE codes SET bolds = ? WHERE code = ?', [' '.join(boldWords),codeName])
+    db.commit()
     logging.logThis('codeDoc ' + str(coreWords))##################
     flash('New Code Entered')
-    
+
     
 #Clear codes from document
 @web_funcs.route('/clearCodes', methods=['POST'])
 def clearCodes():
-    global boldWords
-    boldWords=set()
     db=get_db()
     db.execute('UPDATE entries SET code=?',[' ']) 
     db.execute('DELETE FROM codes')
@@ -225,20 +203,21 @@ def clearCodes():
 #Show only sentances for a specific code [update in JS!]
 @web_funcs.route('/sortByCode', methods=['POST'])
 def sortByCode():
-    global boldWords
 #    return redirect(url_for('show_entries'))
     db = get_db()
     if request.form['choice'] != 'none':
         cur = db.execute('select code, text, IDnum from entries where code = ?', [request.form['choice']] )
         entries = cur.fetchall()
+        cur = db.execute('SELECT code, words from codes')
+        codes = cur.fetchall()
+        cur = db.execute('SELECT bolds from codes where code = ?', [request.form['choice']] )
+        boldString = cur.fetchall()
+        boldList = nltk.word_tokenize(boldString[0][0])
+        logging.logThis('sortByCode ' + request.form['choice'])######################
+        return render_template('show_entries.html', entries=entries, codes=codes, boldWords=boldList)
     else:
-        cur = db.execute('select code, text, IDnum from entries order by id')
-        entries = cur.fetchall()
-    cur = db.execute('SELECT code, words from codes')
-    codes = cur.fetchall()
-    logging.logThis('sortByCode ' + request.form['choice'])######################
-    return render_template('show_entries.html', entries=entries, codes=codes, boldWords=boldWords)
-
+        return show_entries()
+    
 #User Login
 @web_funcs.route('/login', methods=['GET', 'POST'])
 def login():

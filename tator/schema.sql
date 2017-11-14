@@ -9,7 +9,8 @@ drop table if exists codes;
 create table codes (
   id integer primary key autoincrement,
   'code' text not null,
-  'words' text not null
+  'words' text not null,
+  'bolds' text not null
 );
 drop table if exists corpus;
 create table corpus (
